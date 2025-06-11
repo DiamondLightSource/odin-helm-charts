@@ -1,0 +1,51 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Values.detectorName }}-meta-writer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.detectorName }}-meta-writer
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.detectorName }}-meta-writer
+    spec:
+      volumes:
+        - name: {{ $.Values.detectorName }}-odin-deployment-volume
+          configMap:
+            name: {{ $.Values.detectorName }}-odin-deployment
+            defaultMode: 0755
+      containers:
+        - name: {{ .Values.detectorName }}-meta-writer
+          image: {{ .Values.odinImage }}
+          command:
+            - /odin/deployment/meta-writer.sh
+          ports:
+            - containerPort: 5659
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: {{ $.Values.detectorName }}-odin-deployment-volume
+              mountPath: /odin/deployment
+          env:
+            - name: OPENSSL_FORCE_FIPS_MODE
+              value: "0"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.detectorName }}-meta-writer
+spec:
+  selector:
+    app: {{ .Values.detectorName }}-meta-writer
+  ports:
+    - name: {{ .Values.detectorName }}-meta-writer-ctrl
+      protocol: TCP
+      port: 5659
