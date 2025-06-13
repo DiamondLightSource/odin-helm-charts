@@ -1,7 +1,11 @@
-name: Build and publish helm charts
+name: Build and push helm charts
 
 on:
   push:
+    branches:
+      - main
+    tags:
+      - '*'
   pull_request:
 
 env:
@@ -9,39 +13,47 @@ env:
 
 jobs:
   build-and-push-helm-charts:
-    name: publish helm charts to ghcr.io
+    name: Build and push helm charts
     runs-on: ubuntu-latest
-    environment: prod
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: install helm
+      - name: Install helm
         uses: Azure/setup-helm@v3
         with:
           version: ${{ env.HELM_VERSION_TO_INSTALL }}
 
-      - name: push the helm chart
+      - name: Package helm charts
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io/${{ github.repository_owner }} --username ${{ github.repository_owner }} --password-stdin
-
-          REGISTRY=oci://ghcr.io/epics-containers
           set -x
 
-          # helm tags must be SemVar. Use 0.0.0-b0 for testing the latest non-tagged build
           if [ "${GITHUB_REF_TYPE}" == "tag" ] ; then
-            TAG=${GITHUB_REF_NAME}
+            VERSION=${GITHUB_REF_NAME}
           else
-            TAG="0.0.0-b0"
+            VERSION="0.0.0-b0"
           fi
 
           for chart in Charts/*; do
             (
               cd $(realpath $chart)
-              NAME=$(sed -n '/^name: */s///p' Chart.yaml)
+              helm package -u --app-version ${VERSION} --version ${VERSION} .
+            )
+          done
 
-              helm package -u --app-version ${TAG} --version ${TAG} .
-              PACKAGE=${NAME}-${TAG}.tgz
+      - name: Push helm charts to registry
+        if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+        run: |
+          set -x
+
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io/${{ github.repository_owner }} --username ${{ github.repository_owner }} --password-stdin
+          REGISTRY=oci://ghcr.io/diamondlightsource
+
+          for chart in Charts/*; do
+            (
+              cd $(realpath $chart)
+              NAME=$(sed -n '/^name: */s///p' Chart.yaml)
+              PACKAGE=${NAME}-${GITHUB_REF_NAME}.tgz
 
               helm push "$PACKAGE" $REGISTRY
             )
