@@ -1,5 +1,5 @@
 apiVersion: v2
-name: eiger
+name: odin-eiger
 description: A Helm chart for an Odin Eiger deployment
 
 type: application
