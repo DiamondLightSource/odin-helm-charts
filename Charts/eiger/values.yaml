@@ -1,16 +1,57 @@
-# Unique name of the detector in this namespace
+# @schema
+# title: Detector name
+# description: Unique name of the detector in this namespace
+# type: string
+# examples: ["eiger-01"]
+# @schema
 detectorName: ""
-# Image to run the odin processes in
+
+# @schema
+# title: Odin Image
+# description: Container image URI to run Odin pods
+# type: string
+# $ref: https://kubernetesjsonschema.dev/v1.18.1/_definitions.json#/definitions/io.k8s.api.core.v1.Container/properties/image
+# @schema
 odinImage: ""
-# Number of odin-data nodes
+
+# @schema
+# title: odin-data count
+# description: The number of odin-data nodes to deploy
+# type: integer
+# @schema
 odinDataCount: 1
-# IP address of the detector
+
+# @schema
+# title: Detector IP Address
+# description: IP address of the detector
+# type: string
+# @schema
 detectorIp: 127.0.0.1
-# The size of the detector sensor - e.g. "16M"
+
+# @schema
+# title: Sensor Size Description
+# description: The size of the detector sensor - e.g. "16M"
+# type: string
+# @schema
 sensorSize: ""
-# The width of the detector in pixels
+
+# @schema
+# title: Sensor Size X
+# description: The width of the detector in pixels
+# type: integer
+# @schema
 sensorSizeX:
-# The height of the detector in pixels
+
+# @schema
+# title: Sensor Size Y
+# description: The height of the detector in pixels
+# type: integer
+# @schema
 sensorSizeY:
-# The size of the shared memory (per odin-data node) in bytes
+
+# @schema
+# title: Shared Memory Size
+# description: The size of the shared memory (per odin-data node) in bytes
+# type: integer
+# @schema
 sharedMemorySize:
