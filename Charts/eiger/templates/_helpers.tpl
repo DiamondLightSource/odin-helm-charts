@@ -60,3 +60,12 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "odin-helm-charts.rangeJoin" -}}
+{{- $ctx := . -}}
+{{- $out := list -}}
+{{- range $i := until (int $ctx.count) }}
+  {{- $out = append $out (printf $ctx.format $i) -}}
+{{- end }}
+{{- join $ctx.separator $out -}}
+{{- end -}}
