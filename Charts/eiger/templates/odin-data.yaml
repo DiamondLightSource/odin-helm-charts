@@ -72,17 +72,11 @@ spec:
     - name: {{ $.Values.detectorName }}-fr-{{ $idx }}-ctrl
       protocol: TCP
       port: 10000
-      # port: 1{{ $idx | printf "%03d" }}0
-      # targetPort: 10000
     - name: {{ $.Values.detectorName }}-fp-{{ $idx }}-ctrl
       protocol: TCP
       port: 10004
-      # port: 1{{ $idx | printf "%03d" }}4
-      # targetPort: 10004
     - name: {{ $.Values.detectorName }}-fp-{{ $idx }}-meta
       protocol: TCP
       port: 10008
-      # port: 1{{ $idx | printf "%03d" }}8
-      # targetPort: 10008
 ---
 {{- end }}
