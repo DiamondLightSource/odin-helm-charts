@@ -13,9 +13,9 @@ spec:
         app: {{ .Values.detectorName }}-meta-writer
     spec:
       volumes:
-        - name: {{ $.Values.detectorName }}-odin-deployment-volume
+        - name: {{ $.Values.detectorName }}-odin-config-volume
           configMap:
-            name: {{ $.Values.detectorName }}-odin-deployment
+            name: {{ $.Values.detectorName }}-odin-config
             defaultMode: 0755
       containers:
         - name: {{ .Values.detectorName }}-meta-writer
@@ -32,7 +32,7 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-deployment-volume
+            - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
           env:
             - name: OPENSSL_FORCE_FIPS_MODE

@@ -14,9 +14,9 @@ spec:
         app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
     spec:
       volumes:
-        - name: {{ $.Values.detectorName }}-odin-deployment-volume
+        - name: {{ $.Values.detectorName }}-odin-config-volume
           configMap:
-            name: {{ $.Values.detectorName }}-odin-deployment
+            name: {{ $.Values.detectorName }}-odin-config
             defaultMode: 0755
         - name: dev-shm
           emptyDir:
@@ -37,7 +37,7 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-deployment-volume
+            - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
@@ -56,7 +56,7 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-deployment-volume
+            - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
