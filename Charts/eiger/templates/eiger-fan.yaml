@@ -1,9 +1,12 @@
+{{- $enabled := eq .Values.global.enabled false | ternary false true -}}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: {{ .Values.detectorName }}-eiger-fan
+  labels:
+    enabled: {{ $enabled | quote }}
 spec:
-  replicas: 1
+  replicas: {{ $enabled | ternary 1 0 }}
   selector:
     matchLabels:
       app: {{ .Values.detectorName }}-eiger-fan
