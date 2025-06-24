@@ -1,5 +1,5 @@
 {{- $enabled := eq .Values.global.enabled false | ternary false true -}}
-kind: Deployment
+kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: {{ .Values.detectorName }}-eiger-fan

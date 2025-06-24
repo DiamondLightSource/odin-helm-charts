@@ -1,6 +1,6 @@
 {{- $enabled := eq .Values.global.enabled false | ternary false true -}}
 {{- range $idx, $e := until (int $.Values.odinDataCount) }}
-kind: Deployment
+kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
