@@ -32,7 +32,7 @@
       "title": "odin-data count",
       "type": "integer"
     },
-    "odinImage": {
+    "image": {
       "$ref": "https://kubernetesjsonschema.dev/v1.18.1/_definitions.json#/definitions/io.k8s.api.core.v1.Container/properties/image",
       "description": "Container image URI to run Odin pods",
       "required": [],

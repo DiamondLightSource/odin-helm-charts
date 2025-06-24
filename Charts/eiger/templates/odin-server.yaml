@@ -19,7 +19,7 @@ spec:
             defaultMode: 0755
       containers:
         - name: {{ .Values.detectorName }}-odin-server
-          image: {{ .Values.odinImage }}
+          image: {{ .Values.image }}
           command:
             - /odin/deployment/odin-server.sh
           ports:

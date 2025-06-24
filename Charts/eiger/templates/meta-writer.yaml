@@ -19,7 +19,7 @@ spec:
             defaultMode: 0755
       containers:
         - name: {{ .Values.detectorName }}-meta-writer
-          image: {{ .Values.odinImage }}
+          image: {{ .Values.image }}
           command:
             - /odin/deployment/meta-writer.sh
           ports:

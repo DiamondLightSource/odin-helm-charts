@@ -24,7 +24,7 @@ spec:
             sizeLimit: 1Gi
       containers:
         - name: frame-receiver
-          image: {{ $.Values.odinImage }}
+          image: {{ $.Values.image }}
           command:
             - /odin/deployment/fr{{ $idx | add1 }}.sh
           ports:
@@ -42,7 +42,7 @@ spec:
             - name: dev-shm
               mountPath: /dev/shm
         - name: frame-processor
-          image: {{ $.Values.odinImage }}
+          image: {{ $.Values.image }}
           command:
             - /odin/deployment/fp{{ $idx | add1 }}.sh
           ports:

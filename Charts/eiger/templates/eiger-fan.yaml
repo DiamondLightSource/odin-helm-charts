@@ -19,7 +19,7 @@ spec:
             defaultMode: 0755
       containers:
         - name: {{ .Values.detectorName }}-eiger-fan
-          image: {{ .Values.odinImage }}
+          image: {{ .Values.image }}
           command:
             - /odin/deployment/eiger-fan.sh
           ports:
