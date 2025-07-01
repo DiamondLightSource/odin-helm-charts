@@ -1,10 +1,13 @@
+{{- $enabled := eq .Values.global.enabled false | ternary false true -}}
 {{- range $idx, $e := until (int $.Values.odinDataCount) }}
-kind: Deployment
+kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
+  labels:
+    enabled: {{ $enabled | quote }}
 spec:
-  replicas: 1
+  replicas: {{ $enabled | ternary 1 0 }}
   selector:
     matchLabels:
       app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
@@ -14,9 +17,9 @@ spec:
         app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
     spec:
       volumes:
-        - name: {{ $.Values.detectorName }}-odin-deployment-volume
+        - name: {{ $.Values.detectorName }}-odin-config-volume
           configMap:
-            name: {{ $.Values.detectorName }}-odin-deployment
+            name: {{ $.Values.detectorName }}-odin-config
             defaultMode: 0755
         - name: dev-shm
           emptyDir:
@@ -24,7 +27,7 @@ spec:
             sizeLimit: 1Gi
       containers:
         - name: frame-receiver
-          image: {{ $.Values.odinImage }}
+          image: {{ $.Values.image }}
           command:
             - /odin/deployment/fr{{ $idx | add1 }}.sh
           ports:
@@ -37,12 +40,12 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-deployment-volume
+            - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
         - name: frame-processor
-          image: {{ $.Values.odinImage }}
+          image: {{ $.Values.image }}
           command:
             - /odin/deployment/fp{{ $idx | add1 }}.sh
           ports:
@@ -56,7 +59,7 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-deployment-volume
+            - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm

@@ -1,9 +1,12 @@
-kind: Deployment
+{{- $enabled := eq .Values.global.enabled false | ternary false true -}}
+kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: {{ .Values.detectorName }}-eiger-fan
+  labels:
+    enabled: {{ $enabled | quote }}
 spec:
-  replicas: 1
+  replicas: {{ $enabled | ternary 1 0 }}
   selector:
     matchLabels:
       app: {{ .Values.detectorName }}-eiger-fan
@@ -13,13 +16,13 @@ spec:
         app: {{ .Values.detectorName }}-eiger-fan
     spec:
       volumes:
-        - name: {{ $.Values.detectorName }}-odin-deployment-volume
+        - name: {{ $.Values.detectorName }}-odin-config-volume
           configMap:
-            name: {{ $.Values.detectorName }}-odin-deployment
+            name: {{ $.Values.detectorName }}-odin-config
             defaultMode: 0755
       containers:
         - name: {{ .Values.detectorName }}-eiger-fan
-          image: {{ .Values.odinImage }}
+          image: {{ .Values.image }}
           command:
             - /odin/deployment/eiger-fan.sh
           ports:
@@ -32,7 +35,7 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-deployment-volume
+            - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
 ---
 kind: Service

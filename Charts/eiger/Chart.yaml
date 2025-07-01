@@ -1,6 +1,0 @@
-apiVersion: v2
-name: odin-eiger
-description: A Helm chart for an Odin Eiger deployment
-
-type: application
-version: 0.1.0
