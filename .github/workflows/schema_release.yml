@@ -12,9 +12,13 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Generate schema
+        run: |
+          ./generate-schema.sh
+
       - name: Set schema versions
         run: |
-          for schema in Schemas/*.schema.json; do
+          for schema in schema/*.schema.json; do
           (
               sed -i 's/0.0.0-b0/'"$GITHUB_REF_NAME"'/' $schema
           )
@@ -24,5 +28,5 @@ jobs:
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
         with:
           files: |
-            Schemas/*.schema.json
+            schema/*.schema.json
           generate_release_notes: true
