@@ -4,7 +4,7 @@ set -xeuo pipefail
 
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
-helm schema -v || helm install https://github.com/dadav/helm-schema
+helm schema -v || helm plugin install https://github.com/dadav/helm-schema
 
 mkdir -p schema
 
