@@ -1,0 +1,85 @@
+{{- $enabled := eq .Values.global.enabled false | ternary false true -}}
+{{- range $idx, $e := until (int $.Values.odinDataCount) }}
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
+  labels:
+    enabled: {{ $enabled | quote }}
+spec:
+  replicas: {{ $enabled | ternary 1 0 }}
+  selector:
+    matchLabels:
+      app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
+  template:
+    metadata:
+      labels:
+        app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
+    spec:
+      volumes:
+        - name: {{ $.Values.detectorName }}-odin-config-volume
+          configMap:
+            name: {{ $.Values.detectorName }}-odin-config
+            defaultMode: 0755
+        - name: dev-shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+      containers:
+        - name: frame-receiver
+          image: {{ $.Values.image }}
+          command:
+            - /odin/deployment/fr{{ $idx | add1 }}.sh
+          ports:
+            - containerPort: 10000
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: {{ $.Values.detectorName }}-odin-config-volume
+              mountPath: /odin/deployment
+            - name: dev-shm
+              mountPath: /dev/shm
+        - name: frame-processor
+          image: {{ $.Values.image }}
+          command:
+            - /odin/deployment/fp{{ $idx | add1 }}.sh
+          ports:
+            - containerPort: 10004
+            - containerPort: 10008
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: {{ $.Values.detectorName }}-odin-config-volume
+              mountPath: /odin/deployment
+            - name: dev-shm
+              mountPath: /dev/shm
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
+spec:
+  selector:
+    app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
+  ports:
+    - name: {{ $.Values.detectorName }}-fr-{{ $idx }}-ctrl
+      protocol: TCP
+      port: 10000
+    - name: {{ $.Values.detectorName }}-fp-{{ $idx }}-ctrl
+      protocol: TCP
+      port: 10004
+    - name: {{ $.Values.detectorName }}-fp-{{ $idx }}-meta
+      protocol: TCP
+      port: 10008
+---
+{{- end }}
