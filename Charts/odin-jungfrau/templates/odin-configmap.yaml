@@ -1,0 +1,28 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name:  {{ $.Values.detectorName }}-odin-config
+  labels:
+    app: {{ $.Values.detectorName }}-odin
+data:
+  log4cxx.xml: |
+    {{- $.Files.Get "deployment/log4cxx.xml" | nindent 4 }}
+  eiger-fan.sh: |
+    {{- tpl ($.Files.Get "deployment/eiger-fan.sh") $ | nindent 4 }}
+  meta-writer.sh: |
+    {{- tpl ($.Files.Get "deployment/meta-writer.sh") $ | nindent 4 }}
+  odin-server.sh: |
+    {{- tpl ($.Files.Get "deployment/odin-server.sh") $ | nindent 4 }}
+  odin-server.cfg: |
+    {{- tpl ($.Files.Get "deployment/odin-server.cfg") $ | nindent 4 }}
+{{- range $idx, $e := until (int $.Values.odinDataCount) }}
+  {{- $ctx := merge (dict "idx" $idx "odinDataCount" $.Values.odinDataCount ) $ }}
+  fp{{ $idx | add1 }}.sh: |
+    {{- tpl ($.Files.Get "deployment/fp.sh") $ctx | nindent 4 }}
+  fp{{ $idx | add1 }}.json: |
+    {{- tpl ($.Files.Get "deployment/fp.json") $ctx | nindent 4 }}
+  fr{{ $idx | add1 }}.sh: |
+    {{- tpl ($.Files.Get "deployment/fr.sh") $ctx | nindent 4 }}
+  fr{{ $idx | add1 }}.json: |
+    {{- tpl ($.Files.Get "deployment/fr.json") $ctx | nindent 4 }}
+{{- end }}
