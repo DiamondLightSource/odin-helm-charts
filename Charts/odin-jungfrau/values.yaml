@@ -10,7 +10,7 @@ image: ""
 # title: PV Prefix
 # description: PV Prefix for FastCS IOC
 # type: string
-# examples: ["BL03I-EA-EIGER-01"]
+# examples: ["LAB29-EA-JFRAU-01"]
 # @schema
 pvPrefix: ""
 
@@ -18,7 +18,7 @@ pvPrefix: ""
 # title: Detector name
 # description: Unique name of the detector in this namespace
 # type: string
-# examples: ["eiger-01"]
+# examples: ["jungfrau-01"]
 # @schema
 detectorName: ""
 

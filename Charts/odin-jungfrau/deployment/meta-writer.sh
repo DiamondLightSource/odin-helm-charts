@@ -2,7 +2,7 @@
 
 {{- $endpointFormat := (printf "tcp://%s-odin-data-%%d:%d" .Values.detectorName 10008) }}
 
-/venv/bin/eiger_meta_writer \
-    --writer eiger_detector.EigerMetaWriter \
+/venv/bin/jungfrau_meta_writer \
+    --writer jungfrau_detector.JungfrauMetaWriter \
     --sensor-shape {{ .Values.sensorSizeX }} {{ .Values.sensorSizeY }} \
     --data-endpoints {{ include "odin-helm-charts.rangeJoin" (dict "separator" "," "format" $endpointFormat "count" .Values.odinDataCount ) }}
