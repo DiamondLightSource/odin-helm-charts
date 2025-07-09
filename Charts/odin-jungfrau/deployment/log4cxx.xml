@@ -31,6 +31,7 @@
     <!-- Detector-specific plugins -->
     <logger name="FP.EigerProcessPlugin"></logger>
     <logger name="FP.ExcaliburProcessPlugin"></logger>
+    <logger name="FP.JungfrauProcessPlugin"></logger>
     <logger name="FP.LATRDProcessPlugin"></logger>
 
     <!-- The FrameReceiver applications logger hierarchy -->
@@ -41,6 +42,7 @@
     <!-- Detector-specific plugins -->
     <logger name="FR.EigerFrameDecoder"></logger>
     <logger name="FR.ExcaliburFrameDecoder"></logger>
+    <logger name="FR.JungfrauFrameDecoder"></logger>
     <logger name="FR.LATRDDecoderPlugin"></logger>
 
 </log4j:configuration>
