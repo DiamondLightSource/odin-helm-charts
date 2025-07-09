@@ -7,8 +7,6 @@ metadata:
 data:
   log4cxx.xml: |
     {{- $.Files.Get "deployment/log4cxx.xml" | nindent 4 }}
-  eiger-fan.sh: |
-    {{- tpl ($.Files.Get "deployment/eiger-fan.sh") $ | nindent 4 }}
   meta-writer.sh: |
     {{- tpl ($.Files.Get "deployment/meta-writer.sh") $ | nindent 4 }}
   odin-server.sh: |
@@ -21,8 +19,4 @@ data:
     {{- tpl ($.Files.Get "deployment/fp.sh") $ctx | nindent 4 }}
   fp{{ $idx | add1 }}.json: |
     {{- tpl ($.Files.Get "deployment/fp.json") $ctx | nindent 4 }}
-  fr{{ $idx | add1 }}.sh: |
-    {{- tpl ($.Files.Get "deployment/fr.sh") $ctx | nindent 4 }}
-  fr{{ $idx | add1 }}.json: |
-    {{- tpl ($.Files.Get "deployment/fr.json") $ctx | nindent 4 }}
 {{- end }}
