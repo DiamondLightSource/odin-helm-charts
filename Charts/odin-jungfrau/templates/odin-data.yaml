@@ -26,24 +26,6 @@ spec:
             medium: Memory
             sizeLimit: 1Gi
       containers:
-        - name: frame-receiver
-          image: {{ $.Values.image }}
-          command:
-            - /odin/deployment/fr{{ $idx | add1 }}.sh
-          ports:
-            - containerPort: 10000
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
-          volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-config-volume
-              mountPath: /odin/deployment
-            - name: dev-shm
-              mountPath: /dev/shm
         - name: frame-processor
           image: {{ $.Values.image }}
           command:
@@ -72,9 +54,6 @@ spec:
   selector:
     app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
   ports:
-    - name: {{ $.Values.detectorName }}-fr-{{ $idx }}-ctrl
-      protocol: TCP
-      port: 10000
     - name: {{ $.Values.detectorName }}-fp-{{ $idx }}-ctrl
       protocol: TCP
       port: 10004
