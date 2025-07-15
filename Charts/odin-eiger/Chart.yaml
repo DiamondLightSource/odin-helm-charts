@@ -3,7 +3,7 @@ name: odin-eiger
 description: IOC and Odin deployment for Eiger
 
 type: application
-version: 0.2.0
+version: 0.2.2
 home: https://github.com/diamondlightsource/odin-helm-charts
 sources:
   - https://github.com/DiamondLightSource/odin-helm-charts/tree/main/Charts/eiger
