@@ -23,7 +23,7 @@ jobs:
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
         with:
           files: |
-            schemas/${GITHUB_REF_NAME%@*}.schema.json
+            ${GITHUB_REF_NAME%@*}.schema.json
           generate_release_notes: true
 
       - name: Push tagged helm chart to registry
@@ -35,5 +35,4 @@ jobs:
           IFS='@' read -r NAME VERSION <<< "${GITHUB_REF_NAME}"
           REGISTRY=oci://ghcr.io/diamondlightsource
 
-          cd charts
           helm push "${NAME}-${VERSION}.tgz" ${REGISTRY}
