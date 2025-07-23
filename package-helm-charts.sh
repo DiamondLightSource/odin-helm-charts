@@ -2,7 +2,7 @@
 
 set -xeuo pipefail
 
-FULL_REF=$(git describe)
+FULL_REF=$(git describe --tags)
 VERSION="${FULL_REF#*@}"
 
 mkdir -p charts
