@@ -5,6 +5,7 @@ on:
 
 jobs:
   generate-schema:
+    name: Test schema generation
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
