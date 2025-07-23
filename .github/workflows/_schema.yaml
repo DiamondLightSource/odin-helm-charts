@@ -1,0 +1,21 @@
+name: Generate schemas
+
+on:
+  workflow_call:
+
+jobs:
+  generate-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Generate schemas
+        run: |
+          ./generate-schemas.sh
+
+      - name: Upload schemas as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: schemas
+          path: schemas

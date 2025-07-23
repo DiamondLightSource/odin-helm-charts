@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  workflow_call:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check tag
+        run: |
+          if [[ "${GITHUB_REF_NAME}" =~ ^([a-z0-9]+(-[a-z0-9]+)*)@([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            echo "Invalid tag format: '${GITHUB_REF_NAME}'. Expected 'kebab-case@semver', e.g., 'my-app@1.2.3'"
+            exit 1
+          fi
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Create GitHub release with schema for the tagged helm chart
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
+        with:
+          files: |
+            schemas/${GITHUB_REF_NAME%@*}.schema.json
+          generate_release_notes: true
+
+      - name: Push tagged helm chart to registry
+        run: |
+          set -x
+
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io/${{ github.repository_owner }} --username ${{ github.repository_owner }} --password-stdin
+
+          IFS='@' read -r NAME VERSION <<< "${GITHUB_REF_NAME}"
+          REGISTRY=oci://ghcr.io/diamondlightsource
+
+          cd charts
+          helm push "${NAME}-${VERSION}.tgz" ${REGISTRY}

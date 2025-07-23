@@ -1,3 +1,4 @@
 /Charts/*/charts/
 /Charts/*/Chart.lock
-/schema
+/schemas
+/charts
