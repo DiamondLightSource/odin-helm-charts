@@ -2,12 +2,10 @@
 
 set -xeuo pipefail
 
-HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-
 helm schema -v || helm plugin install https://github.com/dadav/helm-schema
 
-mkdir -p schema
+mkdir -p schemas
 
 for chart in Charts/*; do (
-    helm schema -c $chart -o ../../schema/$(basename $chart).schema.json
+    helm schema -c $chart -o ../../schemas/$(basename $chart).schema.json
 ); done

@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  schema:
+    uses: ./.github/workflows/_schema.yaml
+
+  helm:
+    uses: ./.github/workflows/_helm.yaml
+
+  release:
+    if: github.ref_type == 'tag'
+    needs: [schema, helm]
+    uses: ./.github/workflows/_release.yaml
