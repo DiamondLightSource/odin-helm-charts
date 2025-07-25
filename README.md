@@ -12,7 +12,7 @@ multiple processes for the data capture.
 ## CI
 
 The `package-helm-charts` CI job will run `helm package ...` on all the charts in the
-repo on every push. This can be tested locally by running `package-helm-charts.sh`.
+repo. This can be tested locally by running `./package-helm-charts.sh`.
 
 The generate-schema CI job creates a schema from metadata in the default `values.yaml`
 in each chart using [helm-schema]. See the [helm-schema docs][helm-schema-docs] for the
