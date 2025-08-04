@@ -12,7 +12,7 @@ image: ""
 # type: string
 # examples: ["LAB29-EA-JFRAU-01"]
 # @schema
-pvPrefix: ""
+pvPrefix: "LAB29-EA-JFRAU-01"
 
 # @schema
 # title: Detector name
@@ -20,7 +20,15 @@ pvPrefix: ""
 # type: string
 # examples: ["jungfrau-01"]
 # @schema
-detectorName: ""
+detectorName: "Jungfrau"
+
+# @schema
+# title: Config File Path
+# description: Path to the detector's config file
+# type: string
+# examples: ["jungfrau.config"]
+# @schema
+configFilePath: "/config/jungfrau_2_modules.config"
 
 # @schema
 # title: odin-data count
