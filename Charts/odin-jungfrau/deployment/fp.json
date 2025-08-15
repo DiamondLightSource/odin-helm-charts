@@ -131,5 +131,10 @@
         }
       }
     }
+  },
+  {
+    "jungfrau": {
+      "endpoint": {{ .Values.endpoint }}:{{ add 8000 .idx }}
+    }
   }
 ]
