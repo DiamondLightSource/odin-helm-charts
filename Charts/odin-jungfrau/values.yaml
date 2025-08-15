@@ -37,6 +37,13 @@ odinDataCount: 1
 detectorIp: 127.0.0.1
 
 # @schema
+# title: Data Source Endpoint
+# description: The source of the data stream
+# type: string
+# @schema
+endpoint: ""
+
+# @schema
 # title: Sensor Size Description
 # description: The size of the detector sensor - e.g. "16M"
 # type: string
