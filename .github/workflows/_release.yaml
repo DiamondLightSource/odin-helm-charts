@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: Check tag
         run: |
-          if [[ ! "${GITHUB_REF_NAME}" =~ ^([a-z0-9]+(-[a-z0-9]+)*)@([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
-            echo "Invalid tag format: '${GITHUB_REF_NAME}'. Expected 'kebab-case@semver', e.g., 'my-app@1.2.3'"
+          if [[ ! "${GITHUB_REF_NAME}" =~ ^[a-z0-9]+(-[a-z0-9]+)*@[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta|rc)[0-9]+)?$ ]]; then
+            echo "Invalid tag format: '${GITHUB_REF_NAME}'. Expected 'kebab-case@X.Y.Z[-(alpha|beta|rc)N]', e.g., 'my-app@1.2.3' or 'my-app@1.2.3-beta1'"
             exit 1
           fi
 
