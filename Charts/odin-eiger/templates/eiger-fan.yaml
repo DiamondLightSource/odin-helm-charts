@@ -29,11 +29,11 @@ spec:
             - containerPort: 5559
           resources:
             limits:
-              memory: "256Mi" # TODO: Increase when running on EPU
-              cpu: "500m"
+              memory: "1024Mi" # TODO: Increase when running on EPU
+              cpu: "2000m"
             requests:
-              memory: "256Mi"
-              cpu: "500m"
+              memory: "1024Mi"
+              cpu: "2000m"
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
