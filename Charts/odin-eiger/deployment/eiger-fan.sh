@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
-
+sleep 5
 /odin/bin/eigerfan \
     --addr {{ .Values.detectorIp }} \
     --consumers {{ .Values.odinDataCount }} \
