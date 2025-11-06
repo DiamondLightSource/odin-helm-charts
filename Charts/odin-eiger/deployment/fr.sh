@@ -2,6 +2,8 @@
 
 SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
+sleep 5
+
 /odin/bin/frameReceiver \
     --io-threads 2 \
     --ctrl=tcp://0.0.0.0:10000 \
