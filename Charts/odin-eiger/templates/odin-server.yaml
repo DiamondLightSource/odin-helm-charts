@@ -27,16 +27,13 @@ spec:
             - /odin/deployment/odin-server.sh
           ports:
             - containerPort: 8888
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
+          {{- with $.Values.odinServerResources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: OPENSSL_FORCE_FIPS_MODE
               value: "0"

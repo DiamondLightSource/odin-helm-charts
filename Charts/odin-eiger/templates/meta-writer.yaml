@@ -27,16 +27,13 @@ spec:
             - /odin/deployment/meta-writer.sh
           ports:
             - containerPort: 5659
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
+          {{- with $.Values.metaWriterResources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: OPENSSL_FORCE_FIPS_MODE
               value: "0"

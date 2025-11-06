@@ -27,16 +27,13 @@ spec:
             - /odin/deployment/eiger-fan.sh
           ports:
             - containerPort: 5559
-          resources:
-            limits:
-              memory: "256Mi" # TODO: Increase when running on EPU
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
+          {{- with $.Values.eigerFanResources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
 ---
 kind: Service
 apiVersion: v1

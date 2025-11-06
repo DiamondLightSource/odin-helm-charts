@@ -32,18 +32,15 @@ spec:
             - /odin/deployment/fr{{ $idx | add1 }}.sh
           ports:
             - containerPort: 10000
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
+          {{- with $.Values.frameReceiverResources }}
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
         - name: frame-processor
           image: {{ $.Values.image }}
           command:
@@ -51,18 +48,15 @@ spec:
           ports:
             - containerPort: 10004
             - containerPort: 10008
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
+          {{- with $.Values.frameProcessorResources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
 ---
 kind: Service
 apiVersion: v1

@@ -63,3 +63,43 @@ sensorSizeY:
 # type: integer
 # @schema
 sharedMemorySize:
+
+odinServerResources:
+  limits:
+    cpu: 1000m
+    memory: 256Mi
+  requests:
+    cpu: 1000m
+    memory: 256Mi
+
+frameReceiverResources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 1000m
+    memory: 1Gi
+
+frameProcessorResources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 1000m
+    memory: 1Gi
+
+metaWriterResources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 1000m
+    memory: 1Gi
+
+eigerFanResources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 1000m
+    memory: 1Gi
