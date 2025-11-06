@@ -103,3 +103,7 @@ eigerFanResources:
   requests:
     cpu: 1000m
     memory: 1Gi
+
+ioc-instance:
+  command:
+    - bash
