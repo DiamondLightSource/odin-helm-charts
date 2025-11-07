@@ -28,10 +28,16 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: {{ $.Values.detectorName }}-odin-config-volume
+        - name: {{ .Values.detectorName }}-odin-config-volume
           configMap:
-            name: {{ $.Values.detectorName }}-odin-config
+            name: {{ .Values.detectorName }}-odin-config
             defaultMode: 0755
+        {{- with .Values.dataVolume }}
+        - name: {{ $.Values.detectorName }}-data
+          hostPath:
+            path: {{ .hostPath }}
+            type: Directory
+        {{- end }}
       containers:
         - name: {{ .Values.detectorName }}-meta-writer
           image: {{ .Values.image }}
@@ -40,9 +46,14 @@ spec:
           ports:
             - containerPort: 5659
           volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-config-volume
+            - name: {{ .Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
-          {{- with $.Values.metaWriterResources }}
+            {{- with .Values.dataVolume }}
+            - name: {{ $.Values.detectorName }}-data
+              mountPath: {{ .hostPath }}
+              mountPropagation: HostToContainer
+            {{- end }}
+          {{- with .Values.metaWriterResources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}

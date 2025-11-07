@@ -104,6 +104,8 @@ eigerFanResources:
     cpu: 1000m
     memory: 1Gi
 
+dataVolume:
+
 ioc-instance:
   command:
     - bash
