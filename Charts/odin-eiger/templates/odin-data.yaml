@@ -50,13 +50,17 @@ spec:
             - /odin/deployment/fr{{ $idx | add1 }}.sh
           ports:
             - containerPort: 10000
-          {{- with $.Values.frameReceiverResources }}
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
+          {{- with $.Values.frameReceiverResources }}
           resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.securityContext }}
+          securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
         - name: frame-processor
@@ -78,6 +82,10 @@ spec:
             {{- end }}
           {{- with $.Values.frameProcessorResources }}
           resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{ - with $.Values.securityContext }}
+          securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
 ---
