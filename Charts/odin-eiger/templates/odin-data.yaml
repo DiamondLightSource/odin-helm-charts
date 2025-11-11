@@ -36,7 +36,7 @@ spec:
         - name: dev-shm
           emptyDir:
             medium: Memory
-            sizeLimit: 1Gi
+            sizeLimit: {{ $.Values.devShmSize }}
         {{- with $.Values.dataVolume }}
         - name: {{ $.Values.detectorName }}-data
           hostPath:

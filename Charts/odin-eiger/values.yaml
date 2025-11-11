@@ -75,10 +75,10 @@ odinServerResources:
 frameReceiverResources:
   limits:
     cpu: 1000m
-    memory: 1Gi
+    memory: 10Gi
   requests:
     cpu: 1000m
-    memory: 1Gi
+    memory: 10Gi
 
 frameProcessorResources:
   limits:
@@ -103,6 +103,8 @@ eigerFanResources:
   requests:
     cpu: 1000m
     memory: 1Gi
+
+devShmSize: 10Gi
 
 dataVolume:
 
