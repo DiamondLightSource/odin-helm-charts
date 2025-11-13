@@ -15,11 +15,29 @@ spec:
       labels:
         app: {{ .Values.detectorName }}-odin-server
     spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
-        - name: {{ $.Values.detectorName }}-odin-config-volume
+        - name: {{ .Values.detectorName }}-odin-config-volume
           configMap:
-            name: {{ $.Values.detectorName }}-odin-config
+            name: {{ .Values.detectorName }}-odin-config
             defaultMode: 0755
+        {{- with .Values.dataVolume }}
+        - name: {{ $.Values.detectorName }}-data
+          hostPath:
+            path: {{ .hostPath }}
+            type: Directory
+        {{- end }}
       containers:
         - name: {{ .Values.detectorName }}-odin-server
           image: {{ .Values.image }}
@@ -27,16 +45,22 @@ spec:
             - /odin/deployment/odin-server.sh
           ports:
             - containerPort: 8888
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
           volumeMounts:
-            - name: {{ $.Values.detectorName }}-odin-config-volume
+            - name: {{ .Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
+            {{- with .dataVolume }}
+            - name: {{ $.Values.detectorName }}-data
+              mountPath: {{ .hostPath }}
+              mountPropagation: HostToContainer
+            {{- end }}
+          {{- with .Values.odinServerResources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: OPENSSL_FORCE_FIPS_MODE
               value: "0"

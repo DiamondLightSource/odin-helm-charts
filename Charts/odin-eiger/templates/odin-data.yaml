@@ -16,6 +16,18 @@ spec:
       labels:
         app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
     spec:
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: {{ $.Values.detectorName }}-odin-config-volume
           configMap:
@@ -24,7 +36,13 @@ spec:
         - name: dev-shm
           emptyDir:
             medium: Memory
-            sizeLimit: 1Gi
+            sizeLimit: {{ $.Values.devShmSize }}
+        {{- with $.Values.dataVolume }}
+        - name: {{ $.Values.detectorName }}-data
+          hostPath:
+            path: {{ .hostPath }}
+            type: Directory
+        {{- end }}
       containers:
         - name: frame-receiver
           image: {{ $.Values.image }}
@@ -32,18 +50,19 @@ spec:
             - /odin/deployment/fr{{ $idx | add1 }}.sh
           ports:
             - containerPort: 10000
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
+          {{- with $.Values.frameReceiverResources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
         - name: frame-processor
           image: {{ $.Values.image }}
           command:
@@ -51,18 +70,24 @@ spec:
           ports:
             - containerPort: 10004
             - containerPort: 10008
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
+            {{- with $.Values.dataVolume }}
+            - name: {{ $.Values.detectorName }}-data
+              mountPath: {{ .hostPath }}
+              mountPropagation: HostToContainer
+            {{- end }}
+          {{- with $.Values.frameProcessorResources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
 ---
 kind: Service
 apiVersion: v1
