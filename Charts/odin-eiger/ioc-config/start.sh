@@ -4,4 +4,4 @@
 sleep 5
 
 # Start the IOC
-fastcs-odin ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorName }}-odin-server --port 8888
+stdio-expose --ptty --stdin --ctrl-d 'fastcs-odin ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorName }}-odin-server --port 8888'
