@@ -134,5 +134,10 @@
         }
       }
     }
+  },
+  {
+    "eiger": {
+      "endpoint": "{{ .Values.endpoint }}:{{ add 3160 .idx | add1 }}"
+    }
   }
 ]
