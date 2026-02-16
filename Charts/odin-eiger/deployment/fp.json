@@ -119,7 +119,13 @@
   {
     "hdf": {
       "dataset": {
-        "data": {
+        "data1": {
+          "indexes": true
+        },
+	      "data2": {
+          "indexes": true
+        },
+	      "data3": {
           "indexes": true
         },
         "data2": {
@@ -134,7 +140,15 @@
   {
     "hdf": {
       "dataset": {
-        "data": {
+        "data1": {
+          "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
+          "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
+        },
+	      "data2": {
+          "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
+          "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
+        },
+	      "data3": {
           "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
           "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
         },
