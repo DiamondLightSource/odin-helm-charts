@@ -119,7 +119,7 @@
   {
     "hdf": {
       "dataset": {
-        "data1": {
+        "data": {
           "indexes": true
         },
 	      "data2": {
@@ -134,7 +134,7 @@
   {
     "hdf": {
       "dataset": {
-        "data1": {
+        "data": {
           "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
           "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
         },
