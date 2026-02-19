@@ -33,10 +33,6 @@ spec:
           configMap:
             name: {{ $.Values.detectorName }}-odin-config
             defaultMode: 0755
-        - name: dev-shm
-          emptyDir:
-            medium: Memory
-            sizeLimit: {{ $.Values.devShmSize }}
         {{- with $.Values.dataVolume }}
         - name: {{ $.Values.detectorName }}-data
           hostPath:
@@ -54,8 +50,6 @@ spec:
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
-            - name: dev-shm
-              mountPath: /dev/shm
             {{- with $.Values.dataVolume }}
             - name: {{ $.Values.detectorName }}-data
               mountPath: {{ .hostPath }}

@@ -122,10 +122,10 @@
         "data": {
           "indexes": true
         },
-	      "data2": {
+        "data2": {
           "indexes": true
         },
-	      "data3": {
+        "data3": {
           "indexes": true
         }
       }
@@ -138,11 +138,11 @@
           "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
           "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
         },
-	      "data2": {
+      "data2": {
           "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
           "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
         },
-	      "data3": {
+        "data3": {
           "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
           "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
         }
@@ -151,7 +151,7 @@
   },
   {
     "eiger": {
-      "endpoint": "{{ .Values.endpoint }}:{{ add 3160 .idx | add1 }}"
+      "endpoint": "{{ .Values.detectorName }}-eiger-fan:{{ add 31600 .idx | add1 }}"
     }
   }
 ]
