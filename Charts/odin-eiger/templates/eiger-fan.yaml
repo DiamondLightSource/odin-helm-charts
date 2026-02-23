@@ -72,5 +72,5 @@ spec:
 {{- range $idx, $e := until (int $.Values.odinDataCount) }}
     - name: {{ $.Values.detectorName }}-eiger-fan-data-{{ $idx }}
       protocol: TCP
-      port: 3160{{ $idx }}
+      port: 3160{{ $idx | add1 }}
 {{- end }}
