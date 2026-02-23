@@ -151,7 +151,7 @@
   },
   {
     "eiger": {
-      "endpoint": "{{ .Values.detectorName }}-eiger-fan:{{ add 31600 .idx | add1 }}"
+      "endpoint": "tcp://{{ .Values.detectorName }}-eiger-fan:{{ add 31600 .idx | add1 }}"
     }
   }
 ]
