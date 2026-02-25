@@ -1,8 +1,11 @@
 #!/bin/bash
 
-{{- $endpointFormat := (printf "tcp://%s-odin-data-%%d:%d" .Values.detectorName 10008) }}
+{{- $endpoints := list }}
+{{- range $i := until (int .Values.odinDataCount) }}
+  {{- $endpoints = append $endpoints (printf "tcp://%s-odin-data-%d:10008" $.Values.detectorName $i) }}
+{{- end }}
 
 /venv/bin/jungfrau_meta_writer \
     --writer jungfrau_detector.JungfrauMetaWriter \
-    --sensor-shape {{ .Values.sensorSizeX }} {{ .Values.sensorSizeY }} \
-    --data-endpoints {{ include "odin-helm-charts.rangeJoin" (dict "separator" "," "format" $endpointFormat "count" .Values.odinDataCount ) }}
+    --sensor-shape 512 1024 \
+    --data-endpoints {{ join "," $endpoints }}
