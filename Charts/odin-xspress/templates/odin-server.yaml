@@ -1,0 +1,80 @@
+{{- $enabled := eq .Values.global.enabled false | ternary false true -}}
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: {{ .Values.detectorName }}-odin-server
+  labels:
+    enabled: {{ $enabled | quote }}
+spec:
+  replicas: {{ $enabled | ternary 1 0 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.detectorName }}-odin-server
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.detectorName }}-odin-server
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: {{ .Values.detectorName }}-odin-config-volume
+          configMap:
+            name: {{ .Values.detectorName }}-odin-config
+            defaultMode: 0755
+        {{- with .Values.dataVolume }}
+        - name: {{ $.Values.detectorName }}-data
+          hostPath:
+            path: {{ .hostPath }}
+            type: Directory
+        {{- end }}
+      containers:
+        - name: {{ .Values.detectorName }}-odin-server
+          image: {{ .Values.image }}
+          command:
+            - /odin/deployment/odin-server.sh
+          ports:
+            - containerPort: 8888
+          volumeMounts:
+            - name: {{ .Values.detectorName }}-odin-config-volume
+              mountPath: /odin/deployment
+            {{- with .dataVolume }}
+            - name: {{ $.Values.detectorName }}-data
+              mountPath: {{ .hostPath }}
+              mountPropagation: HostToContainer
+            {{- end }}
+          {{- with .Values.odinServerResources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: OPENSSL_FORCE_FIPS_MODE
+              value: "0"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.detectorName }}-odin-server
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ .Values.detectorName }}-odin-server
+  ports:
+    - name: {{ .Values.detectorName }}-odin-server-ctrl
+      protocol: TCP
+      port: 8888
+      targetPort: 8888
