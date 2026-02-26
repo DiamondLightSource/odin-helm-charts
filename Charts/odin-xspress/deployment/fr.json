@@ -1,0 +1,17 @@
+[
+  {
+    "decoder_type": "Xspress",
+    "decoder_path": "/odin/lib",
+    "rx_type": "zmq",
+    "rx_address": "{{ .Values.detectorName }}-xspress-control",
+    "rx_ports": "1515{{ .idx }},",
+    "shared_buffer_name": "odin_buf_{{ .idx }}",
+    "max_buffer_mem": {{ .Values.sharedMemorySize | int64 }},
+    "frame_ready_endpoint": "tcp://127.0.0.1:10001",
+    "frame_release_endpoint": "tcp://127.0.0.1:10002",
+    "decoder_config": {
+      "enable_packet_logging": false,
+      "frame_timeout_ms": 1000,
+    }
+  }
+]
