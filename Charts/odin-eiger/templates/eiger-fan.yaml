@@ -32,6 +32,10 @@ spec:
           configMap:
             name: {{ $.Values.detectorName }}-odin-config
             defaultMode: 0755
+        - name: dev-shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: {{ $.Values.devShmSize }}
       containers:
         - name: {{ .Values.detectorName }}-eiger-fan
           image: {{ .Values.image }}
@@ -42,6 +46,8 @@ spec:
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
+            - name: dev-shm
+              mountPath: /dev/shm
           {{- with $.Values.eigerFanResources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -66,5 +72,5 @@ spec:
 {{- range $idx, $e := until (int $.Values.odinDataCount) }}
     - name: {{ $.Values.detectorName }}-eiger-fan-data-{{ $idx }}
       protocol: TCP
-      port: 3160{{ $idx }}
+      port: 3160{{ $idx | add1 }}
 {{- end }}

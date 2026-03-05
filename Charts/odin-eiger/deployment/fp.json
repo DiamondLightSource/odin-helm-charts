@@ -1,9 +1,5 @@
 [
   {
-    "fr_setup": {
-      "fr_ready_cnxn": "tcp://127.0.0.1:10001",
-      "fr_release_cnxn": "tcp://127.0.0.1:10002"
-    },
     "meta_endpoint": "tcp://*:10008"
   },
   {
@@ -45,14 +41,6 @@
   {
     "plugin": {
       "connect": {
-        "index": "eiger",
-        "connection": "frame_receiver"
-      }
-    }
-  },
-  {
-    "plugin": {
-      "connect": {
         "index": "offset",
         "connection": "eiger"
       }
@@ -77,7 +65,7 @@
   {
     "hdf": {
       "dataset": {
-        "compressed_size": {
+        "size": {
           "datatype": "uint32",
           "chunks": [1000]
         }
@@ -133,6 +121,12 @@
       "dataset": {
         "data": {
           "indexes": true
+        },
+        "data2": {
+          "indexes": true
+        },
+        "data3": {
+          "indexes": true
         }
       }
     }
@@ -143,8 +137,21 @@
         "data": {
           "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
           "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
+        },
+      "data2": {
+          "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
+          "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
+        },
+        "data3": {
+          "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
+          "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
         }
       }
+    }
+  },
+  {
+    "eiger": {
+      "endpoint": "tcp://{{ .Values.detectorName }}-eiger-fan:{{ add 31600 .idx | add1 }}"
     }
   }
 ]
