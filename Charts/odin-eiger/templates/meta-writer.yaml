@@ -64,6 +64,7 @@ spec:
           env:
             - name: OPENSSL_FORCE_FIPS_MODE
               value: "0"
+      terminationGracePeriodSeconds: 3
 ---
 kind: Service
 apiVersion: v1

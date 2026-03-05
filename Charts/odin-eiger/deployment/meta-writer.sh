@@ -4,5 +4,5 @@
 
 /venv/bin/eiger_meta_writer \
     --writer eiger_detector.EigerMetaWriter \
-    --sensor-shape {{ .Values.sensorSizeX }} {{ .Values.sensorSizeY }} \
+    --sensor-shape {{ .Values.sensorSizeY }} {{ .Values.sensorSizeX }} \
     --data-endpoints {{ include "odin-helm-charts.rangeJoin" (dict "separator" "," "format" $endpointFormat "count" .Values.odinDataCount ) }}
