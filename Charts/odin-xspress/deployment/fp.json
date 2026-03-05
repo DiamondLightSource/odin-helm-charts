@@ -1,0 +1,286 @@
+[
+  {
+    "fr_setup": {
+      "fr_ready_cnxn": "tcp://127.0.0.1:10001",
+      "fr_release_cnxn": "tcp://127.0.0.1:10002"
+    },
+    "meta_endpoint": "tcp://*:10008"
+  },
+  {
+    "plugin": {
+      "load": {
+        "index": "xspress",
+        "name": "XspressProcessPlugin",
+        "library": "/odin/lib/libXspressProcessPlugin.so"
+      }
+    }
+  },
+  {
+      "plugin": {
+          "load": {
+              "index": "view",
+              "name": "LiveViewPlugin",
+              "library": "/odin/lib/libLiveViewPlugin.so"
+          }
+      }
+  },
+  {
+      "plugin": {
+          "load": {
+              "index": "blosc",
+              "name": "BloscPlugin",
+              "library": "/odin/lib/libBloscPlugin.so"
+          }
+      }
+  },
+  {
+      "plugin": {
+          "load": {
+              "index": "hdf",
+              "name": "FileWriterPlugin",
+              "library": "/odin/lib/libHdf5Plugin.so"
+          }
+      }
+  },
+  {
+    "plugin": {
+        "connect": {
+            "index": "xspress",
+            "connection": "frame_receiver"
+        }
+    }
+  },
+  {
+      "plugin": {
+          "connect": {
+              "index": "view",
+              "connection": "xspress"
+          }
+      }
+  },
+  {
+      "plugin": {
+          "connect": {
+              "index": "blosc",
+              "connection": "xspress"
+          }
+      }
+  },
+  {
+      "plugin": {
+          "connect": {
+              "index": "hdf",
+              "connection": "blosc"
+          }
+      }
+  },
+  {
+    "xspress": {
+        "live_view": "view"
+    }
+  },
+    {
+        "view": {
+            "live_view_socket_addr": "tcp://0.0.0.0:15500",
+            "dataset_name": "live",
+            "frame_frequency": 0,
+            "per_second": 20
+        }
+    },
+{{- $alpha := "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }}
+{{- $twoLetters := gt (int $.Values.odinDataCount) 26 }}
+{{- $prefix := ternary (index $alpha (int (div .idx 26)) | printf "%c") "" $twoLetters }}
+{{- $suffix := index $alpha (int (mod .idx 26)) | printf "%c" }}
+{{- $postfix := printf "_%s%s" $prefix $suffix }}
+  {
+    "hdf": {
+      "process": {
+        "number": 1,
+        "rank": 0
+      },
+      "file": {
+          "postfix": "{{ $postfix }}"
+      }
+    }
+  },
+  {
+    "hdf": {
+      "file": {
+        "first_number": 1
+      }
+    }
+  },
+{{- $channelsPerFile := int (div (int $.Values.numChannels) (int $.Values.odinDataCount)) }}
+{{- $startChannel := int (mul .idx $channelsPerFile) }}
+{{- range $i := until $channelsPerFile }}
+{{- $channelIdx := add $startChannel $i }}
+  {
+    "hdf": {
+      "dataset": {
+        "mca_{{ $channelIdx }}": {
+          "datatype": "uint32",
+          "dims": [
+            1,
+            4096
+          ],
+          "chunks": [
+            1,
+            1,
+            4096
+          ],
+          "compression": "blosc"
+        }
+      }
+    }
+  },
+{{- end }}
+  {
+    "store": {
+      "index": "mca",
+      "value": [
+        {
+          "plugin": {
+            "disconnect": "all"
+          }
+        },
+        {
+          "plugin": {
+            "disconnect": {
+              "index": "xspresslist",
+              "connection": "frame_receiver"
+            }
+          }
+        },
+        {
+          "plugin": {
+            "connect": {
+              "index": "xspress",
+              "connection": "frame_receiver"
+            }
+          }
+        },
+        {
+          "plugin": {
+            "connect": {
+              "index": "view",
+              "connection": "xspress"
+            }
+          }
+        },
+        {
+          "plugin": {
+            "connect": {
+              "index": "blosc",
+              "connection": "xspress"
+            }
+          }
+        },
+        {
+          "plugin": {
+            "connect": {
+              "index": "hdf",
+              "connection": "blosc"
+            }
+          }
+        },
+{{- range $i := until $channelsPerFile }}
+{{- $channelIdx := add $startChannel $i }}
+        {
+          "hdf": {
+            "dataset": {
+              "mca_{{ $channelIdx }}": {
+                "datatype": "uint32",
+                "chunks": [
+                  256,
+                  1,
+                  4096
+                ],
+                "dims": [
+                  1,
+                  4096
+                ],
+                "compression": "blosc",
+                "indexes": true
+              }
+            }
+          }
+        },
+{{- end }}
+        {
+          "hdf": {
+            "delete_datasets": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "store": {
+      "index": "list",
+      "value": [
+        {
+          "plugin": {
+            "disconnect": "all"
+          }
+        },
+        {
+          "plugin": {
+            "disconnect": {
+              "index": "xspress",
+              "connection": "frame_receiver"
+            }
+          }
+        },
+        {
+          "plugin": {
+            "connect": {
+              "index": "xspresslist",
+              "connection": "frame_receiver"
+            }
+          }
+        },
+        {
+          "plugin": {
+            "connect": {
+              "index": "hdf",
+              "connection": "xspresslist"
+            }
+          }
+        },
+        {
+          "xspresslist": {
+            "channels": [
+              {{- $channelsPerFileList := int (add1 $channelsPerFile) }}
+              {{- $startChannelList := int (mul .idx $channelsPerFileList) }}
+              {{- range $i := until $channelsPerFileList }}
+              {{- $channelIdx := add $startChannelList $i }}
+              {{ $channelIdx }}{{ if lt (add1 $i) $channelsPerFileList }},{{ end }}
+              {{- end }}
+            ],
+            "frame_size": 4194304
+          }
+        },
+        {
+          "hdf": {
+            "dataset": {
+              {{- range $i := until $channelsPerFileList }}
+              {{- $channelIdx := add $startChannelList $i }}
+              "raw_{{ $channelIdx }}": {
+                "datatype": "uint64",
+                "chunks": [
+                  524288
+                ]
+              },
+              {{- end }}
+            }
+          }
+        },
+        {
+          "hdf": {
+            "delete_datasets": true
+          }
+        }
+      ]
+    }
+  }
+]

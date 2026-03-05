@@ -1,0 +1,82 @@
+# @schema
+# title: Container Image URI
+# description: Container image URI to run Odin pods
+# type: string
+# $ref: https://kubernetesjsonschema.dev/v1.18.1/_definitions.json#/definitions/io.k8s.api.core.v1.Container/properties/image
+# @schema
+image: ""
+
+# @schema
+# title: PV Prefix
+# description: PV Prefix for FastCS IOC
+# type: string
+# examples: ["BL03I-EA-EIGER-01"]
+# @schema
+pvPrefix: ""
+
+# @schema
+# title: Detector name
+# description: Unique name of the detector in this namespace
+# type: string
+# examples: ["eiger-01"]
+# @schema
+detectorName: ""
+
+# @schema
+# title: odin-data count
+# description: The number of odin-data nodes to deploy
+# type: integer
+# @schema
+odinDataCount: 1
+
+# @schema
+# title: Shared Memory Size
+# description: The size of the shared memory (per odin-data node) in bytes
+# type: integer
+# @schema
+sharedMemorySize:
+
+numChannels: 8
+numCards: 2
+settingsPath: /example/settings
+simulation: 0
+
+odinServerResources:
+  limits:
+    cpu: 1000m
+    memory: 256Mi
+  requests:
+    cpu: 1000m
+    memory: 256Mi
+
+frameReceiverResources:
+  limits:
+    cpu: 1000m
+    memory: 10Gi
+  requests:
+    cpu: 1000m
+    memory: 10Gi
+
+frameProcessorResources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 1000m
+    memory: 1Gi
+
+metaWriterResources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 1000m
+    memory: 1Gi
+
+devShmSize: 10Gi
+
+dataVolume:
+
+ioc-instance:
+  command:
+    - bash
