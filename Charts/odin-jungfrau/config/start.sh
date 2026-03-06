@@ -4,4 +4,4 @@
 sleep 5
 
 # Start the IOC
-fastcs-jungfrau ioc {{ .Values.pvPrefix }} --config /epics/ioc/jungfrau_9m.config --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888
+fastcs-jungfrau ioc {{ .Values.pvPrefix }} --config {{ .Values.configFilePath }} --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888
