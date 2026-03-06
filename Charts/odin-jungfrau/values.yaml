@@ -30,6 +30,13 @@ detectorName: "jungfrau"
 odinDataCount: 1
 
 # @schema
+# title: Config File Path
+# description: File path of the Jungfrau config file
+# type: string
+# @schema
+configFilePath: ""
+
+# @schema
 # title: Detector IP Address
 # description: IP address of the detector
 # type: string
@@ -49,20 +56,6 @@ endpoint: ""
 # type: string
 # @schema
 sensorSize: ""
-
-# @schema
-# title: Sensor Size X
-# description: The width of the detector in pixels
-# type: integer
-# @schema
-sensorSizeX:
-
-# @schema
-# title: Sensor Size Y
-# description: The height of the detector in pixels
-# type: integer
-# @schema
-sensorSizeY:
 
 # @schema
 # title: Shared Memory Size

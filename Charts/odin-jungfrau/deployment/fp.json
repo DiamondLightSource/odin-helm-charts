@@ -126,15 +126,15 @@
     "hdf": {
       "dataset": {
         "data": {
-          "dims": [{{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}],
-          "chunks": [1, {{ .Values.sensorSizeY }}, {{ .Values.sensorSizeX }}]
+          "dims": [512, 1024],
+          "chunks": [1, 512, 1024]
         }
       }
     }
   },
   {
     "jungfrau": {
-      "endpoint": "{{ .Values.endpoint }}:{{ add 8000 .idx }}"
+      "endpoint": "tcp://{{ .Values.endpoint }}:{{ add 31001 .idx }}"
     }
   }
 ]
