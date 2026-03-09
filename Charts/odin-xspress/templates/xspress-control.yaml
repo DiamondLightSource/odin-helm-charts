@@ -32,12 +32,6 @@ spec:
           configMap:
             name: {{ .Values.detectorName }}-odin-config
             defaultMode: 0755
-        {{- with .Values.configVolume }}
-        - name: {{ $.Values.detectorName }}-config
-          hostPath:
-            path: {{ .hostPath }}
-            type: Directory
-        {{- end }}
       containers:
         - name: {{ .Values.detectorName }}-xspress-control
           image: {{ .Values.image }}
@@ -48,11 +42,6 @@ spec:
           volumeMounts:
             - name: {{ .Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
-            {{- with .configVolume }}
-            - name: {{ $.Values.detectorName }}-config
-              mountPath: {{ .hostPath }}
-              mountPropagation: HostToContainer
-            {{- end }}
           {{- with .Values.xspressControlResources }}
           resources:
             {{- toYaml . | nindent 12 }}
