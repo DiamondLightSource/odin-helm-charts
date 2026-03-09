@@ -39,7 +39,16 @@ sharedMemorySize:
 numChannels: 8
 numCards: 2
 settingsPath: /example/settings
+configVolume: /example
 simulation: 0
+
+xspressControlResources:
+  limits:
+    cpu: 1000m
+    memory: 256Mi
+  requests:
+    cpu: 1000m
+    memory: 256Mi
 
 odinServerResources:
   limits:
