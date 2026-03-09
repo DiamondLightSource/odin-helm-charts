@@ -270,7 +270,7 @@
                 "chunks": [
                   524288
                 ]
-              },
+              }{{ if lt (add1 $i) $channelsPerFileList }},{{ end }}
               {{- end }}
             }
           }

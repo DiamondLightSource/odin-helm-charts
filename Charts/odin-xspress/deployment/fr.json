@@ -11,7 +11,7 @@
     "frame_release_endpoint": "tcp://127.0.0.1:10002",
     "decoder_config": {
       "enable_packet_logging": false,
-      "frame_timeout_ms": 1000,
+      "frame_timeout_ms": 1000
     }
   }
 ]
