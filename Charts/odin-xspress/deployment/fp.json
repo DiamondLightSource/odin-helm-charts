@@ -16,6 +16,15 @@
     }
   },
   {
+    "plugin": {
+      "load": {
+        "index": "xspresslist",
+        "name": "XspressListModeProcessPlugin",
+        "library": "/odin/lib/libXspressListModeProcessPlugin.so"
+      }
+    }
+  },
+  {
       "plugin": {
           "load": {
               "index": "view",
