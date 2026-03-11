@@ -43,6 +43,9 @@ spec:
             - /odin/deployment/xspress-control.sh
           ports:
             - containerPort: 12000
+{{- range $i, $e := until (int .Values.odinDataCount) }}
+            {{ printf "- containerPort: %d" (add 15150 $i) }}
+{{- end }}            
           volumeMounts:
             - name: {{ .Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
@@ -69,3 +72,8 @@ spec:
     - name: {{ .Values.detectorName }}-xspress-control-ctrl
       protocol: TCP
       port: 12000
+{{- range $i, $e := until (int .Values.odinDataCount) }}
+    - name: {{ $.Values.detectorName }}-data-{{ $i }}
+      protocol: TCP
+      {{ printf "port: %d" (add 15150 $i) }}
+{{- end }}     
