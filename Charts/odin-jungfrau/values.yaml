@@ -63,3 +63,7 @@ sensorSize: ""
 # type: integer
 # @schema
 sharedMemorySize:
+
+ioc-instance:
+  command:
+    - bash
