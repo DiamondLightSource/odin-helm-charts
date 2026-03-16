@@ -9,6 +9,20 @@ depend on the `ioc-instance` chart in [ec-helm-charts], which deploys the
 fastcs-odin IOC, and add additional templates to instantiate an Odin deployment of
 multiple processes for the data capture.
 
+## Shared Values
+
+In order for this to work correctly, the service needs the shared section of root
+`values.yaml` to be inserted into the odin chart and the nested ioc-instance chart.
+For example, for a service using the `odin-eiger` chart, the following should be added:
+
+```yaml
+odin-eiger:
+  <<: *shared
+
+  ioc-instance:
+    <<: *shared
+```
+
 ## CI
 
 The `package-helm-charts` CI job will run `helm package ...` on all the charts in the
