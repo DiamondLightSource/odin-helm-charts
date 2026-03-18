@@ -62,16 +62,6 @@
   {
     "hdf": {
       "dataset": {
-        "compressed_size": {
-          "datatype": "uint32",
-          "chunks": [1000]
-        }
-      }
-    }
-  },
-  {
-    "hdf": {
-      "dataset": {
         "uid": {
           "datatype": "uint64",
           "chunks": [1000]
