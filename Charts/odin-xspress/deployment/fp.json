@@ -52,12 +52,29 @@
       }
   },
   {
+      "plugin": {
+          "load": {
+              "index": "raw",
+              "name": "RawFileWriterPlugin",
+              "library": "/odin/lib/libRawFileWriterPlugin.so"
+          }
+      }
+  },
+  {
     "plugin": {
         "connect": {
             "index": "xspress",
             "connection": "frame_receiver"
         }
     }
+  },
+  {
+      "plugin": {
+          "connect": {
+              "index": "raw",
+              "connection": "xspress"
+          }
+      }
   },
   {
       "plugin": {
@@ -167,6 +184,14 @@
               "connection": "frame_receiver"
             }
           }
+        },
+        {
+            "plugin": {
+                "connect": {
+                    "index": "raw",
+                    "connection": "xspress"
+                }
+            }
         },
         {
           "plugin": {
