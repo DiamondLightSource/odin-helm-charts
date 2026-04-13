@@ -70,6 +70,7 @@ spec:
           ports:
             - containerPort: 10004
             - containerPort: 10008
+            - containerPort: 15500
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
@@ -108,5 +109,8 @@ spec:
     - name: {{ $.Values.detectorName }}-fp-{{ $idx }}-meta
       protocol: TCP
       port: 10008
+    - name: {{ $.Values.detectorName }}-fp-{{ $idx }}-live
+      protocol: TCP
+      port: 15500
 ---
 {{- end }}

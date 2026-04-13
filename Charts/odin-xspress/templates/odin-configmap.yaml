@@ -9,6 +9,8 @@ data:
     {{- $.Files.Get "deployment/log4cxx.xml" | nindent 4 }}
   meta-writer.sh: |
     {{- tpl ($.Files.Get "deployment/meta-writer.sh") $ | nindent 4 }}
+  live-view-merger.sh: |
+    {{- tpl ($.Files.Get "deployment/live-view-merger.sh") $ | nindent 4 }}
   odin-server.sh: |
     {{- tpl ($.Files.Get "deployment/odin-server.sh") $ | nindent 4 }}
   odin-server.cfg: |
