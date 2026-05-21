@@ -2,18 +2,18 @@
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-  name: {{ .Values.detectorName }}-eiger-fan
+  name: {{ .Values.detectorName }}-excalibur-fan
   labels:
     enabled: {{ $enabled | quote }}
 spec:
   replicas: {{ $enabled | ternary 1 0 }}
   selector:
     matchLabels:
-      app: {{ .Values.detectorName }}-eiger-fan
+      app: {{ .Values.detectorName }}-excalibur-fan
   template:
     metadata:
       labels:
-        app: {{ .Values.detectorName }}-eiger-fan
+        app: {{ .Values.detectorName }}-excalibur-fan
     spec:
       {{- with .Values.affinity }}
       affinity:
@@ -37,10 +37,10 @@ spec:
             medium: Memory
             sizeLimit: {{ $.Values.devShmSize }}
       containers:
-        - name: {{ .Values.detectorName }}-eiger-fan
+        - name: {{ .Values.detectorName }}-excalibur-fan
           image: {{ .Values.image }}
           command:
-            - /odin/deployment/eiger-fan.sh
+            - /odin/deployment/excalibur-fan.sh
           ports:
             - containerPort: 5559
           volumeMounts:
@@ -48,7 +48,7 @@ spec:
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
-          {{- with $.Values.eigerFanResources }}
+          {{- with $.Values.excaliburFanResources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -61,16 +61,16 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Values.detectorName }}-eiger-fan
+  name: {{ .Values.detectorName }}-excalibur-fan
 spec:
   selector:
-    app: {{ .Values.detectorName }}-eiger-fan
+    app: {{ .Values.detectorName }}-excalibur-fan
   ports:
-    - name: {{ .Values.detectorName }}-eiger-fan-ctrl
+    - name: {{ .Values.detectorName }}-excalibur-fan-ctrl
       protocol: TCP
       port: 5559
 {{- range $idx, $e := until (int $.Values.odinDataCount) }}
-    - name: {{ $.Values.detectorName }}-eiger-fan-data-{{ $idx }}
+    - name: {{ $.Values.detectorName }}-excalibur-fan-data-{{ $idx }}
       protocol: TCP
       port: 3160{{ $idx | add1 }}
 {{- end }}

@@ -1,12 +1,12 @@
 apiVersion: v2
-name: odin-eiger
-description: IOC and Odin deployment for Eiger
+name: odin-excalibur
+description: IOC and Odin deployment for Excalibur
 
 type: application
 version: 0.3.1
 home: https://github.com/diamondlightsource/odin-helm-charts
 sources:
-  - https://github.com/DiamondLightSource/odin-helm-charts/tree/main/Charts/eiger
+  - https://github.com/DiamondLightSource/odin-helm-charts/tree/main/Charts/excalibur
 
 dependencies:
   - name: ioc-instance

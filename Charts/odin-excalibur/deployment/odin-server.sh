@@ -7,7 +7,7 @@ ulimit -n 2048
 
 sleep 3
 
-/venv/bin/eiger_control \
+/venv/bin/excalibur_control \
     --config=$SCRIPT_DIR/odin-server.cfg \
     --logging=info \
     --access_logging=ERROR

@@ -5,9 +5,9 @@
   {
     "plugin": {
       "load": {
-        "index": "eiger",
-        "name": "EigerProcessPlugin",
-        "library": "/odin/lib/libEigerProcessPlugin.so"
+        "index": "excalibur",
+        "name": "ExcaliburProcessPlugin",
+        "library": "/odin/lib/libExcaliburProcessPlugin.so"
       }
     }
   },
@@ -42,7 +42,7 @@
     "plugin": {
       "connect": {
         "index": "offset",
-        "connection": "eiger"
+        "connection": "excalibur"
       }
     }
   },
@@ -150,8 +150,8 @@
     }
   },
   {
-    "eiger": {
-      "endpoint": "tcp://{{ .Values.detectorName }}-eiger-fan:{{ add 31600 .idx | add1 }}"
+    "excalibur": {
+      "endpoint": "tcp://{{ .Values.detectorName }}-excalibur-fan:{{ add 31600 .idx | add1 }}"
     }
   }
 ]

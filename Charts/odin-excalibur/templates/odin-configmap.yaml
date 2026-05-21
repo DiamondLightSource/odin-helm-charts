@@ -7,8 +7,8 @@ metadata:
 data:
   log4cxx.xml: |
     {{- $.Files.Get "deployment/log4cxx.xml" | nindent 4 }}
-  eiger-fan.sh: |
-    {{- tpl ($.Files.Get "deployment/eiger-fan.sh") $ | nindent 4 }}
+  excalibur-fan.sh: |
+    {{- tpl ($.Files.Get "deployment/excalibur-fan.sh") $ | nindent 4 }}
   meta-writer.sh: |
     {{- tpl ($.Files.Get "deployment/meta-writer.sh") $ | nindent 4 }}
   odin-server.sh: |

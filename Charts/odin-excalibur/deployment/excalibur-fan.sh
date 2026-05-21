@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
-/odin/bin/eigerfan \
+/odin/bin/excaliburfan \
     --addr {{ .Values.detectorIp }} \
     --consumers {{ .Values.odinDataCount }} \
     --context-threads 4 \
