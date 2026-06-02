@@ -88,14 +88,6 @@ metaWriterResources:
     cpu: 1000m
     memory: 1Gi
 
-excaliburFanResources:
-  limits:
-    cpu: 1000m
-    memory: 1Gi
-  requests:
-    cpu: 1000m
-    memory: 1Gi
-
 devShmSize: 10Gi
 
 dataVolume:

@@ -151,7 +151,7 @@
   },
   {
     "excalibur": {
-      "endpoint": "tcp://{{ .Values.detectorName }}-excalibur-fan:{{ add 31600 .idx | add1 }}"
+      "endpoint": "tcp://{{ .Values.endpoint }}:{{ add 31001 .idx }}"
     }
   }
 ]
