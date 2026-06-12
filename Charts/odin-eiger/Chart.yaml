@@ -10,7 +10,7 @@ sources:
 
 dependencies:
   - name: ioc-instance
-    version: 5.0.0
+    version: 5.6.0
     repository: "oci://ghcr.io/epics-containers/charts"
     import-values:
       - child: ioc-instance
