@@ -1,10 +1,14 @@
-kind: ConfigMap
+{{- $serviceConfig := (.Files.Glob "config/*").AsConfig -}}
 apiVersion: v1
+kind: ConfigMap
 metadata:
-  name:  {{ .Release.Name }}-config
+  name: {{ .Release.Name }}-config
   labels:
     app: {{ .Release.Name }}
 data:
 {{ (.Files.Glob "ioc-config/{liveness.sh,stop.sh}").AsConfig | indent 2 }}
   start.sh: |
     {{- tpl (.Files.Get "ioc-config/start.sh") . | nindent 4 }}
+{{- if ne $serviceConfig "{}" }}
+{{ $serviceConfig | indent 2 }}
+{{- end }}
