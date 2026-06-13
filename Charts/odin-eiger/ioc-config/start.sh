@@ -4,4 +4,4 @@
 sleep 5
 
 # Start the IOC
-fastcs-eiger run /epics/ioc/config/fastcs.yaml
+fastcs-eiger run /epics/ioc/fastcs.yaml
