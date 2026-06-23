@@ -64,6 +64,13 @@ sensorSizeY:
 # @schema
 sharedMemorySize:
 
+# @schema
+# title: enable FastCS IOC
+# description: controls wether a FastCS IOC is deployed or not
+# type: boolean
+# @schema
+useFastCS: true
+
 odinServerResources:
   limits:
     cpu: 1000m
