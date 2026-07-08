@@ -4,7 +4,7 @@
     <!-- Output the log message to system console -->
     <appender name="ApplicationConsoleAppender" class="org.apache.log4j.ConsoleAppender">
         <param name="Target" value="System.out" />
-        <param name="Threshold" value="DEBUG"/>
+        <param name="Threshold" value="INFO"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%F:%L:%n %d{HH:mm:ss,SSS} %-14c %-5p - %m%n"/>
         </layout>
@@ -30,7 +30,9 @@
     <logger name="FP.HDF5File"></logger>
     <!-- Detector-specific plugins -->
     <logger name="FP.EigerProcessPlugin"></logger>
-    <logger name="FP.ExcaliburProcessPlugin"></logger>
+    <logger name="FP.ExcaliburProcessPlugin">
+        <priority value="INFO" />
+    </logger>
     <logger name="FP.JungfrauProcessPlugin"></logger>
     <logger name="FP.LATRDProcessPlugin"></logger>
 
