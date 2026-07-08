@@ -8,5 +8,8 @@ sleep 5
 
 /odin/bin/frameProcessor \
     --ctrl=tcp://0.0.0.0:10004 \
-    --config=$SCRIPT_DIR/fp{{ .idx | add1 }}.json \
-    --log-config $SCRIPT_DIR/log4cxx.xml
+    --ready=tcp://127.0.0.1:10001 \
+    --release=tcp://127.0.0.1:10002 \
+    --json_file=$SCRIPT_DIR/fp{{ .idx | add1 }}.json \
+    --logconfig $SCRIPT_DIR/log4cxx.xml
+  
