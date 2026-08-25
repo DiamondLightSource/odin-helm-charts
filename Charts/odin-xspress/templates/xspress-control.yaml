@@ -36,6 +36,9 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: {{ $.Values.devShmSize }}
+        - name: xspress-calibration-volume
+          persistentVolumeclaim:
+            claimName: p51-xspress-calibration-claim
       containers:
         - name: {{ .Values.detectorName }}-xspress-control
           image: {{ .Values.image }}
