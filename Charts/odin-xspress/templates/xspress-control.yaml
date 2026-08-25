@@ -51,6 +51,8 @@ spec:
               mountPath: /odin/deployment
             - name: dev-shm
               mountPath: /dev/shm
+            - name: xspress-calibration-volume
+              mountPath: /usr/local/settings
           {{- with .Values.xspressControlResources }}
           resources:
             {{- toYaml . | nindent 12 }}
