@@ -50,6 +50,7 @@ spec:
             - /odin/deployment/fr{{ $idx | add1 }}.sh
           ports:
             - containerPort: 10000
+            - containerPort: 30125
           volumeMounts:
             - name: {{ $.Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
@@ -103,6 +104,9 @@ spec:
     - name: {{ $.Values.detectorName }}-fr-{{ $idx }}-ctrl
       protocol: TCP
       port: 10000
+    - name: {{ $.Values.detectorName }}-fr-list-{{ $idx }}-ctrl
+      protocol: TCP
+      port: 30125
     - name: {{ $.Values.detectorName }}-fp-{{ $idx }}-ctrl
       protocol: TCP
       port: 10004
