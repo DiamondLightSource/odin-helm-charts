@@ -284,11 +284,10 @@
         {
           "xspresslist": {
             "channels": [
-              {{- $channelsPerFileList := int (add1 $channelsPerFile) }}
-              {{- $startChannelList := int (mul .idx $channelsPerFileList) }}
-              {{- range $i := until $channelsPerFileList }}
+              {{- $startChannelList := int (mul .idx $channelsPerFile) }}
+              {{- range $i := until $channelsPerFile }}
               {{- $channelIdx := add $startChannelList $i }}
-              {{ $channelIdx }}{{ if lt (add1 $i) $channelsPerFileList }},{{ end }}
+              {{ $channelIdx }}{{ if lt (add1 $i) $channelsPerFile }},{{ end }}
               {{- end }}
             ],
             "frame_size": 4194304
@@ -297,14 +296,14 @@
         {
           "hdf": {
             "dataset": {
-              {{- range $i := until $channelsPerFileList }}
+              {{- range $i := until $channelsPerFile }}
               {{- $channelIdx := add $startChannelList $i }}
               "raw_{{ $channelIdx }}": {
                 "datatype": "uint64",
                 "chunks": [
                   524288
                 ]
-              }{{ if lt (add1 $i) $channelsPerFileList }},{{ end }}
+              }{{ if lt (add1 $i) $channelsPerFile }},{{ end }}
               {{- end }}
             }
           }
