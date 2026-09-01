@@ -217,6 +217,11 @@
             }
           }
         },
+        {
+          "hdf": {
+            "delete_datasets": true
+          }
+        },        
 {{- range $i := until $channelsPerFile }}
 {{- $channelIdx := add $startChannel $i }}
         {
@@ -238,13 +243,8 @@
               }
             }
           }
-        },
-{{- end }}
-        {
-          "hdf": {
-            "delete_datasets": true
-          }
         }
+{{- end }}
       ]
     }
   },
@@ -295,6 +295,11 @@
         },
         {
           "hdf": {
+            "delete_datasets": true
+          }
+        },        
+        {
+          "hdf": {
             "dataset": {
               {{- range $i := until $channelsPerFile }}
               {{- $channelIdx := add $startChannelList $i }}
@@ -306,11 +311,6 @@
               }{{ if lt (add1 $i) $channelsPerFile }},{{ end }}
               {{- end }}
             }
-          }
-        },
-        {
-          "hdf": {
-            "delete_datasets": true
           }
         }
       ]
