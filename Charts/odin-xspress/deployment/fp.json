@@ -19,8 +19,8 @@
     "plugin": {
       "load": {
         "index": "xspresslist",
-        "name": "XspressListModeProcessPlugin",
-        "library": "/odin/lib/libXspressListModeProcessPlugin.so"
+        "name": "X3X2ListModeProcessPlugin",
+        "library": "/odin/lib/libX3X2ListModeProcessPlugin.so"
       }
     }
   },
