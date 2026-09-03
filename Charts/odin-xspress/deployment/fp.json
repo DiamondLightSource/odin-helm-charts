@@ -322,13 +322,13 @@
                 ]
               },
               "ch{{ $channelIdx }}_event_height": {
-                "datatype": "uint64",
+                "datatype": "uint16",
                 "chunks": [
                   524288
                 ]
               },
               "ch{{ $channelIdx }}_reset_flag": {
-                "datatype": "uint64",
+                "datatype": "uint8",
                 "chunks": [
                   524288
                 ]
