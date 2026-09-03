@@ -308,6 +308,30 @@
                 "chunks": [
                   524288
                 ]
+              },
+              "ch{{ $channelIdx }}_time_frame": {
+                "datatype": "uint64",
+                "chunks": [
+                  524288
+                ]
+              },
+              "ch{{ $channelIdx }}_time_stamp": {
+                "datatype": "uint64",
+                "chunks": [
+                  524288
+                ]
+              },
+              "ch{{ $channelIdx }}_event_height": {
+                "datatype": "uint64",
+                "chunks": [
+                  524288
+                ]
+              },
+              "ch{{ $channelIdx }}_reset_flag": {
+                "datatype": "uint64",
+                "chunks": [
+                  524288
+                ]
               }{{ if lt (add1 $i) $channelsPerFile }},{{ end }}
               {{- end }}
             }
