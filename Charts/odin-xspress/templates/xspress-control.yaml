@@ -37,7 +37,7 @@ spec:
             medium: Memory
             sizeLimit: {{ $.Values.devShmSize }}
         - name: xspress-calibration-volume
-          persistentVolumeclaim:
+          persistentVolumeClaim:
             claimName: {{ $.Values.global.domain }}-xspress-calibration-claim
       containers:
         - name: {{ .Values.detectorName }}-xspress-control
