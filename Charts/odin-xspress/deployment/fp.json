@@ -327,6 +327,12 @@
                   524288
                 ]
               },
+              "ch{{ $channelIdx }}_raw_frame": {
+                "datatype": "uint16",
+                "chunks": [
+                  524288
+                ]
+              },
               "ch{{ $channelIdx }}_reset_flag": {
                 "datatype": "uint8",
                 "chunks": [
