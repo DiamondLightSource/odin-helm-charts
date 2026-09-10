@@ -62,8 +62,8 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
-            - name: OPENSSL_FORCE_FIPS_MODE
-              value: "0"
+            - name: {{ .Values.userName }}
+              value: {{ .Values.userId }}
       terminationGracePeriodSeconds: 3
 ---
 kind: Service
