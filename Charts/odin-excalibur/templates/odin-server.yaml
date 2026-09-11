@@ -62,8 +62,8 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
-            - name: {{ .Values.userName }}
-              value: {{ .Values.userId }}
+          - name: USER
+            value: {{ .Values.userName | quote }}
       terminationGracePeriodSeconds: 3
 ---
 kind: Service
