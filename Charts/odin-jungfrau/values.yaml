@@ -2,7 +2,6 @@
 # title: Container Image URI
 # description: Container image URI to run Odin pods
 # type: string
-# $ref: https://kubernetesjsonschema.dev/v1.18.1/_definitions.json#/definitions/io.k8s.api.core.v1.Container/properties/image
 # @schema
 image: ""
 
