@@ -14,6 +14,7 @@ transport:
       aliases:
 {{ .Values.aliases | toYaml | indent 8 }}
 {{- end }}
+  - epicspva: {}
     gui:
       title: Eiger
       output_dir: /epics/opi/
