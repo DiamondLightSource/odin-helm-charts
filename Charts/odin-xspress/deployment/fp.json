@@ -333,6 +333,18 @@
                   524288
                 ]
               },
+              "ttl_a{{ $channelIdx }}_frame": {
+                "datatype": "uint8",
+                "chunks": [
+                  524288
+                ]
+              },
+              "ttl_b{{ $channelIdx }}_frame": {
+                "datatype": "uint8",
+                "chunks": [
+                  524288
+                ]
+              },
               "ch{{ $channelIdx }}_reset_flag": {
                 "datatype": "uint8",
                 "chunks": [
