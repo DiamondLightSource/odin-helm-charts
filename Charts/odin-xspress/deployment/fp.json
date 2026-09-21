@@ -334,13 +334,13 @@
                 ]
               },
               "ttl_a{{ $channelIdx }}_frame": {
-                "datatype": "uint8",
+                "datatype": "uint16",
                 "chunks": [
                   524288
                 ]
               },
               "ttl_b{{ $channelIdx }}_frame": {
-                "datatype": "uint8",
+                "datatype": "uint16",
                 "chunks": [
                   524288
                 ]
