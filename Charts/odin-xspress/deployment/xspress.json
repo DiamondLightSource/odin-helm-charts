@@ -2,7 +2,7 @@
   { 
     "app":
     {
-      "debug_level": 2,
+      "debug_level": {{ .Values.debugLevel }},
       "ctrl_endpoint": "tcp://*:12000"
     }
   }

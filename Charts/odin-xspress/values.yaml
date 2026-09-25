@@ -38,6 +38,8 @@ sharedMemorySize:
 
 numChannels: 8
 numCards: 2
+numTf: 16384
+debugLevel: 2
 settingsPath: /example/settings
 configVolume: /example
 simulation: 0
