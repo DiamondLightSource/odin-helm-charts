@@ -44,11 +44,11 @@ simulation: 0
 
 xspressControlResources:
   limits:
-    cpu: 1000m
-    memory: 256Mi
+    cpu: 4000m
+    memory: 10Gi
   requests:
-    cpu: 1000m
-    memory: 256Mi
+    cpu: 4000m
+    memory: 10Gi
 
 odinServerResources:
   limits:
@@ -69,10 +69,10 @@ frameReceiverResources:
 frameProcessorResources:
   limits:
     cpu: 1000m
-    memory: 1Gi
+    memory: 10Gi
   requests:
     cpu: 1000m
-    memory: 1Gi
+    memory: 10Gi
 
 metaWriterResources:
   limits:
