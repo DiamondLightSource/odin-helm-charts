@@ -46,6 +46,8 @@ spec:
             - /odin/deployment/xspress-control.sh
           ports:
             - containerPort: 12000
+            - containerPort: 30123
+            - containerPort: 30124
 {{- range $i, $e := until (int .Values.odinDataCount) }}
             {{ printf "- containerPort: %d" (add 15150 $i) }}
 {{- end }}            
