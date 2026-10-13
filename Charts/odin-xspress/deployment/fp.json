@@ -303,12 +303,6 @@
             "dataset": {
               {{- range $i := until $channelsPerFile }}
               {{- $channelIdx := add $startChannelList $i }}
-              "raw_{{ $channelIdx }}": {
-                "datatype": "uint64",
-                "chunks": [
-                  524288
-                ]
-              },
               "ch{{ $channelIdx }}_time_frame": {
                 "datatype": "uint64",
                 "chunks": [
@@ -322,24 +316,6 @@
                 ]
               },
               "ch{{ $channelIdx }}_event_height": {
-                "datatype": "uint16",
-                "chunks": [
-                  524288
-                ]
-              },
-              "ch{{ $channelIdx }}_raw_frame": {
-                "datatype": "uint16",
-                "chunks": [
-                  524288
-                ]
-              },
-              "ttl_a{{ $channelIdx }}_frame": {
-                "datatype": "uint16",
-                "chunks": [
-                  524288
-                ]
-              },
-              "ttl_b{{ $channelIdx }}_frame": {
                 "datatype": "uint16",
                 "chunks": [
                   524288
