@@ -303,6 +303,30 @@
             "dataset": {
               {{- range $i := until $channelsPerFile }}
               {{- $channelIdx := add $startChannelList $i }}
+              "marker{{ $channelIdx }}_time_frame": {
+                "datatype": "uint64",
+                "chunks": [
+                  524288
+                ]
+              },
+              "marker{{ $channelIdx }}_time_stamp": {
+                "datatype": "uint64",
+                "chunks": [
+                  524288
+                ]
+              },
+              "marker{{ $channelIdx }}_event_height": {
+                "datatype": "uint16",
+                "chunks": [
+                  524288
+                ]
+              },
+              "marker{{ $channelIdx }}_reset_flag": {
+                "datatype": "uint8",
+                "chunks": [
+                  524288
+                ]
+              },
               "ch{{ $channelIdx }}_time_frame": {
                 "datatype": "uint64",
                 "chunks": [
