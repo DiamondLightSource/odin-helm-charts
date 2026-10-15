@@ -1,0 +1,7 @@
+{{- /* Include ioc-instance templates except for the configmap, which we provide and it
+will mount because it is not empty */ -}}
+{{ include "ioc-instance.statefulset" . }}
+---
+{{ include "ioc-instance.service" . }}
+---
+{{ include "ioc-instance.datavolume" . }}

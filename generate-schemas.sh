@@ -2,7 +2,7 @@
 
 set -xeuo pipefail
 
-helm schema -v || helm plugin install https://github.com/dadav/helm-schema
+helm schema -v || helm plugin install https://github.com/dadav/helm-schema --version 0.23.4
 
 mkdir -p schemas
 
