@@ -51,6 +51,9 @@ spec:
 {{- range $i, $e := until (int .Values.odinDataCount) }}
             {{ printf "- containerPort: %d" (add 15150 $i) }}
 {{- end }}            
+          env:
+          - name: XSP3READOUT
+            value: "frames"
           volumeMounts:
             - name: {{ .Values.detectorName }}-odin-config-volume
               mountPath: /odin/deployment
