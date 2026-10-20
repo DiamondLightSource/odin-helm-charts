@@ -38,6 +38,17 @@ spec:
             path: {{ .hostPath }}
             type: Directory
         {{- end }}
+      initContainers:
+        - name: wait-for-a
+          image: curlimages/curl:8.7.0
+          command:
+            - sh
+            - -c
+            - |
+              until curl -fsS http://{{ .Values.detectorName }}-xspress-control:40000/healthz; do
+                echo "waiting for A to be ready..."
+                sleep 5
+              done
       containers:
         - name: {{ .Values.detectorName }}-odin-server
           image: {{ .Values.image }}
@@ -79,3 +90,4 @@ spec:
       protocol: TCP
       port: 8888
       targetPort: 8888
+    

@@ -48,9 +48,16 @@ spec:
             - containerPort: 12000
             - containerPort: 30123
             - containerPort: 30124
+            - containerPort: 40000
 {{- range $i, $e := until (int .Values.odinDataCount) }}
             {{ printf "- containerPort: %d" (add 15150 $i) }}
-{{- end }}            
+{{- end }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 40000
+            initialDelaySeconds: 2
+            periodSeconds: 5
           env:
           - name: XSP3READOUT
             value: "frames"
@@ -86,4 +93,4 @@ spec:
     - name: {{ $.Values.detectorName }}-data-{{ $i }}
       protocol: TCP
       {{ printf "port: %d" (add 15150 $i) }}
-{{- end }}     
+{{- end }}
