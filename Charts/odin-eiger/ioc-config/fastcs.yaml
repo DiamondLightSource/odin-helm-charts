@@ -12,7 +12,7 @@ transport:
   - epicsca:
 {{- if .Values.aliases }}
       aliases:
-{{ .Values.aliases | toYaml | indent 8 }}
+{{ .Values.aliases | indent 8 }}
 {{- end }}
   - epicspva: {}
     gui:
