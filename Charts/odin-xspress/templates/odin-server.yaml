@@ -39,16 +39,9 @@ spec:
             type: Directory
         {{- end }}
       initContainers:
-        - name: wait-for-a
-          image: curlimages/curl:8.7.0
-          command:
-            - sh
-            - -c
-            - |
-              until curl -fsS http://{{ .Values.detectorName }}-xspress-control:40000/healthz; do
-                echo "waiting for A to be ready..."
-                sleep 5
-              done
+        - name: wait-before-start
+          image: busybox:1.36
+          command: ["sh", "-c", "sleep 30"]
       containers:
         - name: {{ .Values.detectorName }}-odin-server
           image: {{ .Values.image }}
