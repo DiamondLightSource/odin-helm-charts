@@ -70,6 +70,9 @@ apiVersion: v1
 metadata:
   name: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
 spec:
+  # Headless: DNS returns the pod address directly, so the meta-writer's
+  # long-lived connection is not NATed through a ClusterIP (conntrack expiry).
+  clusterIP: None
   selector:
     app: {{ $.Values.detectorName }}-odin-data-{{ $idx }}
   ports:
