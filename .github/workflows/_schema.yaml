@@ -3,6 +3,9 @@ name: Generate schemas
 on:
   workflow_call:
 
+env:
+  HELM_VERSION_TO_INSTALL: 3.14.3
+
 jobs:
   generate-schemas:
     name: Test schema generation
@@ -10,6 +13,11 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
+      - name: Install helm
+        uses: Azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION_TO_INSTALL }}
 
       - name: Generate schemas
         run: |
