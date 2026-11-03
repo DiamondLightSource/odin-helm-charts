@@ -109,5 +109,3 @@ dataVolume:
 ioc-instance:
   command:
     - bash
-
-aliases: {}

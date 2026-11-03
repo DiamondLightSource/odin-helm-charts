@@ -8,5 +8,3 @@ data:
 {{ (.Files.Glob "ioc-config/{liveness.sh,stop.sh}").AsConfig | indent 2 }}
   start.sh: |
     {{- tpl (.Files.Get "ioc-config/start.sh") . | nindent 4 }}
-  fastcs.yaml: |
-    {{- tpl (.Files.Get "ioc-config/fastcs.yaml") . | nindent 4 }}
