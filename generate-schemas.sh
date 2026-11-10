@@ -5,13 +5,10 @@ set -xeuo pipefail
 helm version
 
 # Install the helm-schema plugin if it is not already present.
-# Helm cannot verify plugins installed from a Git repository URL,
-# so use --verify=false for the GitHub source.
 if ! helm plugin list | grep -q '^schema'; then
     helm plugin install https://github.com/dadav/helm-schema --version 0.23.4
 fi
 
-helm plugin list
 helm schema -v
 mkdir -p schemas
 
