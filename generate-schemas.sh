@@ -2,6 +2,9 @@
 
 set -xeuo pipefail
 
+helm version
+helm plugin list
+
 # Install the helm-schema plugin if it is not already present.
 # Helm cannot verify plugins installed from a Git repository URL,
 # so use --verify=false for the GitHub source.
