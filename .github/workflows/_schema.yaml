@@ -2,14 +2,24 @@ name: Generate schemas
 
 on:
   workflow_call:
+    inputs:
+      helm-version:
+        required: true
+        type: string
 
 jobs:
   generate-schemas:
     name: Test schema generation
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
+      - name: Install helm
+        uses: Azure/setup-helm@v3
+        with:
+          version: ${{ inputs.helm-version }}
 
       - name: Generate schemas
         run: |

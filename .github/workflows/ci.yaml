@@ -3,12 +3,19 @@ name: CI
 on:
   push:
 
+env:
+  HELM_VERSION_TO_INSTALL: 3.14.3
+
 jobs:
   schema:
     uses: ./.github/workflows/_schema.yaml
+    with:
+      helm-version: ${{ env.HELM_VERSION_TO_INSTALL }}
 
   helm:
     uses: ./.github/workflows/_helm.yaml
+    with:
+      helm-version: ${{ env.HELM_VERSION_TO_INSTALL }}
 
   release:
     if: github.ref_type == 'tag'
