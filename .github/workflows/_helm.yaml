@@ -2,10 +2,9 @@ name: Package helm charts
 
 on:
   workflow_call:
-    inputs:
-      helm-version:
-        required: true
-        type: string
+
+env:
+  HELM_VERSION_TO_INSTALL: 3.14.3
 
 jobs:
   package-helm-charts:
@@ -21,7 +20,7 @@ jobs:
       - name: Install helm
         uses: Azure/setup-helm@v3
         with:
-          version: ${{ inputs.helm-version }}
+          version: ${{ env.HELM_VERSION_TO_INSTALL }}
 
       - name: Package helm charts
         run: |
