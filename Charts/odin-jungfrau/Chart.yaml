@@ -12,3 +12,8 @@ dependencies:
   - name: ioc-instance
     version: 5.14.0
     repository: "oci://ghcr.io/epics-containers/charts"
+    # ioc-instance is a library chart: lift its defaults (nested under its own
+    # ioc-instance key) into this chart's .Values.ioc-instance
+    import-values:
+      - child: ioc-instance
+        parent: ioc-instance
