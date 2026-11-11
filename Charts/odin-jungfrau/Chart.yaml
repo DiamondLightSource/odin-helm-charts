@@ -10,5 +10,5 @@ sources:
 
 dependencies:
   - name: ioc-instance
-    version: 4.1.2
-    repository: "oci://ghcr.io/epics-containers"
+    version: 5.14.0
+    repository: "oci://ghcr.io/epics-containers/charts"
