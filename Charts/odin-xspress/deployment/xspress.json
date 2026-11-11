@@ -1,0 +1,9 @@
+[
+  { 
+    "app":
+    {
+      "debug_level": {{ .Values.debugLevel }},
+      "ctrl_endpoint": "tcp://*:12000"
+    }
+  }
+]
