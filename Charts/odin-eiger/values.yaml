@@ -97,6 +97,13 @@ eigerFanResources:
 
 devShmSize: 10Gi
 
+# @schema
+# title: EigerFan host network
+# description: Run EigerFan on the node's network so its connection to the detector stream is not NATed
+# type: boolean
+# @schema
+eigerFanHostNetwork: false
+
 dataVolume:
 
 ioc-instance:
