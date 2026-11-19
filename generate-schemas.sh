@@ -2,8 +2,14 @@
 
 set -xeuo pipefail
 
-helm schema -v || helm plugin install https://github.com/dadav/helm-schema
+helm version
 
+# Install the helm-schema plugin if it is not already present.
+if ! helm plugin list | grep -q '^schema'; then
+    helm plugin install https://github.com/dadav/helm-schema --version 0.23.4
+fi
+
+helm schema -v
 mkdir -p schemas
 
 for chart in Charts/*; do (

@@ -3,6 +3,9 @@ name: Release
 on:
   workflow_call:
 
+env:
+  HELM_VERSION_TO_INSTALL: 3.14.3
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -13,6 +16,11 @@ jobs:
             echo "Invalid tag format: '${GITHUB_REF_NAME}'. Expected 'kebab-case@X.Y.Z[-(alpha|beta|rc)N]', e.g., 'my-app@1.2.3' or 'my-app@1.2.3-beta1'"
             exit 1
           fi
+
+      - name: Install helm
+        uses: Azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION_TO_INSTALL }}
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
@@ -34,7 +42,7 @@ jobs:
         run: |
           set -x
 
-          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io/${{ github.repository_owner }} --username ${{ github.repository_owner }} --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
 
           IFS='@' read -r NAME VERSION <<< "${GITHUB_REF_NAME}"
           REGISTRY=oci://ghcr.io/diamondlightsource
