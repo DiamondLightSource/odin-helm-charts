@@ -47,9 +47,9 @@ and the generated schema will be available as an asset on the GitHub release at
 
 or for the latest release
 
-<https://github.com/DiamondLightSource/odin-helm-charts/releases/latest/download/odin-eiger.schema.json>
+<https://github.com/DiamondLightSource/odin-helm-charts/releases/>
 
-[ec-helm-charts]: https://github.com/DiamondLightSource/odin-helm-charts/releases/latest/download/odin-eiger.schema.json
+[ec-helm-charts]: https://github.com/epics-containers/ec-helm-charts/releases/latest/download/ioc-instance.schema.json
 [helm-schema]: https://github.com/dadav/helm-schema
 [helm-schema-docs]: https://github.com/dadav/helm-schema?tab=readme-ov-file#examples
 [helm-docs]: https://helm.sh/docs/
