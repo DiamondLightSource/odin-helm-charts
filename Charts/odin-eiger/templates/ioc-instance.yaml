@@ -1,5 +1,13 @@
 {{- /* Include ioc-instance templates except for the configmap, which we provide and it
 will mount because it is not empty */ -}}
+{{- /* fastcs.yaml is supplied by the parent chart as a ConfigMap named
+<release>-fastcs. Mount it at /epics/ioc/fastcs by adding it to the
+ioc-instance volumes before the statefulset is rendered */ -}}
+{{- $ioc := get .Values "ioc-instance" }}
+{{- $volume := dict "name" "fastcs-config" "configMap" (dict "name" (printf "%s-fastcs" .Release.Name)) }}
+{{- $mount := dict "name" "fastcs-config" "mountPath" "/epics/ioc/fastcs" "readOnly" true }}
+{{- $_ := set $ioc "volumes" (append ($ioc.volumes | default list) $volume) }}
+{{- $_ := set $ioc "volumeMounts" (append ($ioc.volumeMounts | default list) $mount) }}
 {{ include "ioc-instance.statefulset" . }}
 ---
 {{ include "ioc-instance.service" . }}
